@@ -31,7 +31,7 @@ public class TuringAutomata extends JFrame{
 		menu.getAccessibleContext().setAccessibleDescription("Operation functions for the Turing machine");
 		
 		JMenuItem parseMenuItem = new JMenuItem("Parse",KeyEvent.VK_P);
-		parseMenuItem.getAccessibleContext().setAccessibleDescription("Let's you select a foleder with the turing machine settins to be parsed");
+		parseMenuItem.getAccessibleContext().setAccessibleDescription("Let's you select a folder with the turing machine settings to be parsed");
 		parseMenuItem.addActionListener(new ParseAction());
 		
 		menu.add(parseMenuItem);
