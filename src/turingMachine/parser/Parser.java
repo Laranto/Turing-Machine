@@ -37,7 +37,7 @@ public class Parser {
 
 
 	private static String[] purify(String definitionLine) {
-		return definitionLine.replace("[\\{\\}]", "").split("[=,]");
+		return definitionLine.replaceAll("[{}]", "").split("[=,]");
 	}
 
 	private static void parseTuringMachineLine(TuringMachine tm, String readLine) {
@@ -45,12 +45,12 @@ public class Parser {
 		if(definition[0].equals(tm.getComputationsName()))
 		{
 			tm.getComputionDefinitions().add(definition[1].trim());
-		}else if(definition.equals(tm.getEndStatesName()))
+		}else if(definition[0].equals(tm.getEndStatesName()))
 		{
 			for (String endState : purify(definition[1])) {
 				tm.getEndingStateDefinitions().add(endState.trim());
 			}
-		}else if(definition.equals(tm.getStatesName()))
+		}else if(definition[0].equals(tm.getStatesName()))
 		{
 			for (String state : purify(definition[1])) {
 				tm.getStateDefinitions().add(state.trim());
