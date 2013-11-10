@@ -1,16 +1,15 @@
 package turingMachine.logic;
 
 import java.util.HashMap;
-
-import org.omg.PortableInterceptor.SUCCESSFUL;
-
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Arni
- *
+ * 
  */
 public class Tape {
-	
+
 	/**
 	 * The position the reader is at
 	 */
@@ -20,101 +19,139 @@ public class Tape {
 	 */
 	private State currentState;
 
-
-
+	/**
+	 * The Turing Machine the Tape runs on
+	 */
 	private TuringMachine turingMachine;
 
+	/**
+	 * Word written on the tape
+	 */
+	private HashMap<Integer, String> word;
 
-	private HashMap<Integer,String> word;
-
-	
-	public Tape(TuringMachine turingMachine, String initialWord){
+	/**
+	 * 
+	 * @param turingMachine
+	 *            Turing machine the Tape runs on
+	 * @param initialWord
+	 *            Word that stands initially on the tape
+	 */
+	public Tape(TuringMachine turingMachine, String initialWord) {
 		this.turingMachine = turingMachine;
 		this.word = new HashMap<>(initialWord.length());
 		char[] wordParts = initialWord.toCharArray();
-		for (int i = 0; i<wordParts.length;i++) {
-			this.word.put(i,((Character)wordParts[i]).toString());
+		for (int i = 0; i < wordParts.length; i++) {
+			this.word.put(i, ((Character) wordParts[i]).toString());
 		}
 		position = 0;
 		currentState = turingMachine.getStartState();
 	}
-	
-	
-	public StepResult runStep(int numberOfSteps){
-		StepResult result=StepResult.INPROGRESS;
-		for(int i = 0 ; i<numberOfSteps;i++)
-		{
-			Computation comp = currentState.compute(getInput());
+
+	/**
+	 * Runs the given number of steps
+	 * 
+	 * @param numberOfSteps
+	 * @return The state which the Turing machine is in. If <code>SUCCESS</code>
+	 *         or <code>FAILURE</code> is returned the machine can't run
+	 *         further.
+	 */
+	public StepResult runStep(int numberOfSteps) {
+		StepResult result = StepResult.INPROGRESS;
+		for (int i = 0; i < numberOfSteps; i++) {
+			Computation comp = currentState.compute(getInputAt(position));
 			result = computeResult(comp);
-			if(result!=StepResult.INPROGRESS)
-			{
+			if (result != StepResult.INPROGRESS) {
 				break;
 			}
 			computeStep(comp);
-			
+
 		}
 		return result;
 	}
 
-
+	/**
+	 * Checks the state of the current computation.
+	 * @param comp the computation that should be run this step. Can be null
+	 * @return 
+	 * <code>SUCCESS</code> if the computation is null and the <code>currentState</code> is an end state.<br>
+	 * <code>FAILURE</code> if the computation is null and the <code>currentState</code> is <b>not</b> an end state.<br>
+	 * <code>INPROGRESS</code> else
+	 */
 	private StepResult computeResult(Computation comp) {
-		if(comp==null)
-		{
-			if(currentState.isEnd())
-			{
+		if (comp == null) {
+			if (currentState.isEnd()) {
 				return StepResult.SUCCESS;
-			}else
-			{
+			} else {
 				return StepResult.FAILURE;
 			}
 		}
 		return StepResult.INPROGRESS;
 	}
 
-
 	private void computeStep(Computation comp) {
 		word.put(position, comp.getOutput());
 		position = comp.getMoveDirection().move(position);
 		currentState = comp.getTargetState();
 	}
-	
-	private String getInput() {
-		String input = new String();
-		if(isPositionOutOfBounds())
+
+	/**
+	 * Get the input symbol the next computation. If not in the word anymore, a blank symbol will be used
+	 * @return the input symbol as string
+	 */
+	private String getInputAt(int symbolPosition) {
+		String input = word.get(symbolPosition);
+		if(input == null)
 		{
 			input = turingMachine.getBlankSymbol();
-		}else
-		{
-			input = word.get(position);
 		}
 		return input;
 	}
 
 
-	private boolean isPositionOutOfBounds() {
-		return position<0||position>word.size()-1;
-	}
-
-
-	public StepResult runAll(){
+	/**
+	 * Runs the tape until it ends in <code>SUCCESS</code> or <code>FAILURE</code> 
+	 * @return <code>SUCCESS</code> or <code>FAILURE</code>
+	 */
+	public StepResult runAll() {
 		StepResult result = StepResult.INPROGRESS;
-		while(result==StepResult.INPROGRESS)
-		{
-			result=runStep(1);
+		while (result == StepResult.INPROGRESS) {
+			result = runStep(1);
 		}
-		
+
 		return result;
 	}
-	
-	public State getCurrentState(){
+
+	/**
+	 * @return state of the reading head
+	 */
+	public State getCurrentState() {
 		return currentState;
 	}
-	
-	public int getPosition(){
+
+	/**
+	 * @return position of the reading head on the tape
+	 */
+	public int getPosition() {
 		return position;
 	}
 	
-	public enum StepResult{
+	/**
+	 * @param symbolCount  
+	 * @return the symbols (symbolCount*2 +1 in total) around the reading head
+	 */
+	public List<String> getSymbolAroundReadingHead(int symbolCount)
+	{
+		LinkedList<String> symbols = new LinkedList<String>();
+		symbols.add(getInputAt(position));
+		for(int i = 1;i<symbolCount;i++)
+		{
+			symbols.addFirst(getInputAt(position-i));
+			symbols.addLast(getInputAt(position+i));
+		}
+		return symbols;
+	}
+
+	public enum StepResult {
 		INPROGRESS, FAILURE, SUCCESS
 	}
 }
