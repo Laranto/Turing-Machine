@@ -5,6 +5,9 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
+import turingMachine.logic.Tape;
+import turingMachine.logic.Tape.StepResult;
+
 public class TuringMachinePanel extends JPanel implements Observer{
 
 	public TuringMachinePanel(){
@@ -13,7 +16,10 @@ public class TuringMachinePanel extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+		if(arg instanceof Tape){
+			System.out.println(((Tape)arg).getCurrentState().getIdentifier());
+		}else if(arg instanceof StepResult){
+			System.out.println(((StepResult)arg));
+		}
 	}
 }
