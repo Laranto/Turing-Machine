@@ -10,11 +10,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import turingMachine.TuringAutomata;
 
-public class ParseTuringMachine implements ActionListener {
+public class ParseTuringMachineAction implements ActionListener {
 
 	private TuringAutomata turingAutomata;
 
-	public ParseTuringMachine(TuringAutomata turingAutomata) {
+	public ParseTuringMachineAction(TuringAutomata turingAutomata) {
 		this.turingAutomata = turingAutomata;
 	}
 

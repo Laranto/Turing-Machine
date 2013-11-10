@@ -12,7 +12,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
 import turingMachine.logic.TuringMachine;
-import turingMachine.parser.ParseTuringMachine;
+import turingMachine.parser.ParseTuringMachineAction;
 
 /**
  * @author Arni
@@ -29,9 +29,33 @@ public class TuringAutomata extends Observable{
 		frame.setSize(800, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		createMenuBar();
+		createTabbedPane();
 		frame.setVisible(true);
 	}
 	
+	private void createTabbedPane() {
+		frame.getContentPane().setLayout(null);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(0, 0, 784, 341);
+		frame.getContentPane().add(tabbedPane);
+		
+		createTuringMachinePanel(tabbedPane);
+		createKNFPanel(tabbedPane);
+	}
+
+	private void createKNFPanel(JTabbedPane tabbedPane) {
+		KNFPanel knfPanel = new KNFPanel();
+		addObserver(knfPanel);
+		tabbedPane.addTab("KNF", null, knfPanel, null);
+	}
+
+	private void createTuringMachinePanel(JTabbedPane tabbedPane) {
+		TuringMachinePanel tmPanel = new TuringMachinePanel();
+		addObserver(tmPanel);
+		tabbedPane.addTab("Turing-Machine", null, tmPanel, null);
+	}
+
 	private void createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 		
@@ -41,7 +65,7 @@ public class TuringAutomata extends Observable{
 		
 		JMenuItem parseMenuItem = new JMenuItem("Parse",KeyEvent.VK_P);
 		parseMenuItem.getAccessibleContext().setAccessibleDescription("Let's you select a folder with the turing machine settings to be parsed");
-		parseMenuItem.addActionListener(new ParseTuringMachine(this));
+		parseMenuItem.addActionListener(new ParseTuringMachineAction(this));
 		
 		menu.add(parseMenuItem);
 		menuBar.add(menu);
@@ -61,21 +85,11 @@ public class TuringAutomata extends Observable{
 		JMenuItem mntmStepToEnd = new JMenuItem("To End");
 		mntmStepToEnd.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.CTRL_MASK));
 		mnStep.add(mntmStepToEnd);
-		frame.getContentPane().setLayout(null);
-		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 784, 341);
-		frame.getContentPane().add(tabbedPane);
-		
-		TuringMachinePanel tmPanel = new TuringMachinePanel();
-		tabbedPane.addTab("Turing-Machine", null, tmPanel, null);
-		
-		KNFPanel knfPanel = new KNFPanel();
-		tabbedPane.addTab("KNF", null, knfPanel, null);
 	}
 	
 	public void setTuringMachine(TuringMachine turingMachine){
 		this.turingMachine = turingMachine;
+		setChanged();
 	}
 	
 	public void setWord(String word){
