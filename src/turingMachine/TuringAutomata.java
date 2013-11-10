@@ -74,15 +74,11 @@ public class TuringAutomata extends Observable{
 		JMenu mnStep = new JMenu("Step");
 		menuBar.add(mnStep);
 		
-		JMenuItem mntmBack = new JMenuItem("Back");
-		mntmBack.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, InputEvent.CTRL_MASK));
-		mnStep.add(mntmBack);
-		
 		JMenuItem mntmForward = new JMenuItem("Forward");
 		mntmForward.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK));
 		mnStep.add(mntmForward);
 		
-		JMenuItem mntmStepToEnd = new JMenuItem("To End");
+		JMenuItem mntmStepToEnd = new JMenuItem("Run All");
 		mntmStepToEnd.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.CTRL_MASK));
 		mnStep.add(mntmStepToEnd);
 	}
