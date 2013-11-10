@@ -9,15 +9,24 @@ import turingMachine.logic.TuringMachine;
 
 public class Parser {
 
-	public static void parseTuringMachineFile(File turingMachineFile) throws IOException {
-		BufferedReader bufferedReader = new BufferedReader(new FileReader(turingMachineFile));
-		String readLine = bufferedReader.readLine();
-		TuringMachine tm = parseFirstTuringLine(readLine);
-		while((readLine=bufferedReader.readLine())!=null)
-		{
-			parseTuringMachineLine(tm,readLine);
+	public static TuringMachine parseTuringMachineFile(File turingMachineFile) throws IOException {
+		BufferedReader bufferedReader = null;
+		TuringMachine turingMachine = null;
+		try{
+			bufferedReader = new BufferedReader(new FileReader(turingMachineFile));
+			String readLine = bufferedReader.readLine();
+			turingMachine = parseFirstTuringLine(readLine);
+			while((readLine=bufferedReader.readLine())!=null)
+			{
+				parseTuringMachineLine(turingMachine,readLine);
+			}
+			turingMachine.compile();
+		}finally{			
+			if(bufferedReader != null){
+				bufferedReader.close();
+			}
 		}
-		tm.compile();
+		return turingMachine;
 	}
 
 
