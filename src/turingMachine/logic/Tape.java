@@ -2,6 +2,8 @@ package turingMachine.logic;
 
 import java.util.HashMap;
 
+import org.omg.PortableInterceptor.SUCCESSFUL;
+
 
 /**
  * @author Arni
@@ -38,15 +40,42 @@ public class Tape {
 	}
 	
 	
-	public void runStep(int numberOfSteps){
+	public StepResult runStep(int numberOfSteps){
+		StepResult result=StepResult.INPROGRESS;
 		for(int i = 0 ; i<numberOfSteps;i++)
 		{
 			Computation comp = currentState.compute(getInput());
-			word.put(position, comp.getOutput());
-			position = comp.getMoveDirection().move(position);
-			currentState = comp.getTargetState();
+			result = computeResult(comp);
+			if(result!=StepResult.INPROGRESS)
+			{
+				break;
+			}
+			computeStep(comp);
 			
 		}
+		return result;
+	}
+
+
+	private StepResult computeResult(Computation comp) {
+		if(comp==null)
+		{
+			if(currentState.isEnd())
+			{
+				return StepResult.SUCCESS;
+			}else
+			{
+				return StepResult.FAILURE;
+			}
+		}
+		return StepResult.INPROGRESS;
+	}
+
+
+	private void computeStep(Computation comp) {
+		word.put(position, comp.getOutput());
+		position = comp.getMoveDirection().move(position);
+		currentState = comp.getTargetState();
 	}
 	
 	private String getInput() {
@@ -67,8 +96,14 @@ public class Tape {
 	}
 
 
-	public void runAll(){
+	public StepResult runAll(){
+		StepResult result = StepResult.INPROGRESS;
+		while(result==StepResult.INPROGRESS)
+		{
+			result=runStep(1);
+		}
 		
+		return result;
 	}
 	
 	public State getCurrentState(){
@@ -77,5 +112,9 @@ public class Tape {
 	
 	public int getPosition(){
 		return position;
+	}
+	
+	public enum StepResult{
+		INPROGRESS, FAILURE, SUCCESS
 	}
 }
