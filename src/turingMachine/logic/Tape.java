@@ -21,4 +21,35 @@ public class Tape {
 	 * The state the reader is in
 	 */
 	private State currentState;
+
+
+
+	private TuringMachine turingMachine;
+
+
+
+	private String word;
+	
+	public Tape(TuringMachine turingMachine, String word){
+		this.turingMachine = turingMachine;
+		this.word = word;
+		
+	}
+	
+	
+	public void runStep(int numberOfSteps){
+		
+	}
+	
+	public void runAll(){
+		
+	}
+	
+	public State getCurrentState(){
+		return currentState;
+	}
+	
+	public int getPosition(){
+		return position;
+	}
 }
