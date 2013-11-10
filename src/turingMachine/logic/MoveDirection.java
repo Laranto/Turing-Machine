@@ -5,5 +5,16 @@ package turingMachine.logic;
  *
  */
 public enum MoveDirection {
-	L,R,S
+	L(-1),R(1),S(0);
+
+	
+	private int direction;
+
+	private MoveDirection(int direction) {
+		this.direction = direction;
+	}
+	
+	public int move(int position) {
+		return position+direction;
+	}
 }

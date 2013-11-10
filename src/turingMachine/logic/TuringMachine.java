@@ -94,6 +94,9 @@ public class TuringMachine {
 				+ ", " + endStatesName + "}]";
 	}
 
+	/**
+	 * Builds the Turing Machine using the definitions lists. Make sure those lists are filled before invoking this method 
+	 */
 	public void compile() {
 		createStates();
 		setEndingStates();
