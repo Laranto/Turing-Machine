@@ -8,7 +8,15 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class ParseAction implements ActionListener {
+import turingMachine.TuringAutomata;
+
+public class ParseTuringMachine implements ActionListener {
+
+	private TuringAutomata turingAutomata;
+
+	public ParseTuringMachine(TuringAutomata turingAutomata) {
+		this.turingAutomata = turingAutomata;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
@@ -18,7 +26,7 @@ public class ParseAction implements ActionListener {
 		if(fileChooser.showOpenDialog(fileChooser) == JFileChooser.APPROVE_OPTION)
 		{
 				try {
-					Parser.parseTuringMachineFile(fileChooser.getSelectedFile());
+					turingAutomata.setTuringMachine(Parser.parseTuringMachineFile(fileChooser.getSelectedFile()));
 				} catch (IOException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
 					e.printStackTrace();
