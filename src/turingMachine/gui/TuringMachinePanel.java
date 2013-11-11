@@ -13,6 +13,11 @@ import turingMachine.logic.Tape;
 import turingMachine.logic.Tape.StepResult;
 import turingMachine.logic.TuringMachine;
 
+/**
+ * Panel showing the read/write head of the machine with its current state and the tape beneath it
+ * @author Arni
+ *
+ */
 public class TuringMachinePanel extends JPanel implements Observer{
 
 	private static final int CHARACTERS_AROUND_HEAD_ON_TAPE = 15;
@@ -54,10 +59,19 @@ public class TuringMachinePanel extends JPanel implements Observer{
 		}
 	}
 
+	/**
+	 * Some visual aid to see which field on the tape is currently under access of the read/write head
+	 * @param g
+	 */
 	private void drawConnectorLine(Graphics g) {
 		g.drawLine(this.getWidth()/2, 0, this.getWidth()/2, this.getHeight()/2);
 	}
 
+	
+	/**
+	 * Draws a tape with the word on it. The fields that aren't filled with the word hold the blank symbol and are grayed for visual simplicity.
+	 * @param g
+	 */
 	private void drawTape(Graphics g) {
 		List<String> tapeSymbols = tape.getSymbolAroundReadingHead(CHARACTERS_AROUND_HEAD_ON_TAPE);
 		int tapeFieldWidth = this.getWidth()/tapeSymbols.size();
@@ -77,6 +91,10 @@ public class TuringMachinePanel extends JPanel implements Observer{
 		}
 	}
 
+	/**
+	 * Draws the read/write header in a nice light blue color
+	 * @param g
+	 */
 	private void drawReadWriteHead(Graphics g) {
 		Rectangle readHead = new Rectangle(this.getWidth()/2-TM_READER_WIDTH/2,0,TM_READER_WIDTH,TM_READER_HEIGHT);
 		g.setColor(new Color(160,240,255));
