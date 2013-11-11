@@ -8,7 +8,13 @@ import javax.swing.JPanel;
 import turingMachine.logic.Tape;
 import turingMachine.logic.Tape.StepResult;
 
-public class KNFPanel extends JPanel implements Observer{
+/**
+ * Displaying orbs
+ * 
+ * @author Michael
+ *
+ */
+public class GraphicOutputPanel extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {

@@ -46,19 +46,26 @@ public class TuringAutomata extends Observable{
 		frame.getContentPane().add(tabbedPane);
 		
 		createTuringMachinePanel(tabbedPane);
-		createKNFPanel(tabbedPane);
-	}
-
-	private void createKNFPanel(JTabbedPane tabbedPane) {
-		KNFPanel knfPanel = new KNFPanel();
-		addObserver(knfPanel);
-		tabbedPane.addTab("KNF", null, knfPanel, null);
+		createGraphicOutputPanel(tabbedPane);
+		createCalculationPanel(tabbedPane);
 	}
 
 	private void createTuringMachinePanel(JTabbedPane tabbedPane) {
 		TuringMachinePanel tmPanel = new TuringMachinePanel();
 		addObserver(tmPanel);
 		tabbedPane.addTab("Turing-Machine", null, tmPanel, null);
+	}
+	
+	private void createGraphicOutputPanel(JTabbedPane tabbedPane) {
+		GraphicOutputPanel graphicOutputPanel = new GraphicOutputPanel();
+		addObserver(graphicOutputPanel);
+		tabbedPane.addTab("Glaphical Output", null, graphicOutputPanel, null);
+	}
+	
+	private void createCalculationPanel(JTabbedPane tabbedPane) {
+		CalculationPanel calculationPanel = new CalculationPanel();
+		addObserver(calculationPanel);
+		tabbedPane.addTab("Calculations", null, calculationPanel, null);
 	}
 
 	private void createMenuBar() {
