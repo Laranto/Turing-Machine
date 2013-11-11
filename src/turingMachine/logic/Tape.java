@@ -1,5 +1,6 @@
 package turingMachine.logic;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +29,11 @@ public class Tape {
 	 * Word written on the tape
 	 */
 	private HashMap<Integer, String> word;
+	
+	/**
+	 * Keeps track of the Computations that have been run on the tape. Only information is relayed via this
+	 */
+	private ArrayList<Computation> computationHistory; 
 
 	/**
 	 * 
@@ -85,6 +91,7 @@ public class Tape {
 				return StepResult.FAILURE;
 			}
 		}
+		computationHistory.add(comp);
 		return StepResult.INPROGRESS;
 	}
 
@@ -150,6 +157,17 @@ public class Tape {
 		}
 		return symbols;
 	}
+	
+	
+
+	/**
+	 * @return a list of all computations that have run so far
+	 */
+	public ArrayList<Computation> getComputationHistory() {
+		return computationHistory;
+	}
+
+
 
 	public enum StepResult {
 		INPROGRESS, FAILURE, SUCCESS
