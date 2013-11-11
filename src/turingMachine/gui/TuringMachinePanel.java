@@ -11,12 +11,14 @@ import javax.swing.JPanel;
 
 import turingMachine.logic.Tape;
 import turingMachine.logic.Tape.StepResult;
+import turingMachine.logic.TuringMachine;
 
 public class TuringMachinePanel extends JPanel implements Observer{
 
 	private static final int CHARACTERS_AROUND_HEAD_ON_TAPE = 15;
 
 	private Tape tape; 
+	private String blankSymbol;
 	
 	/**
 	 * Size of the reading head of the Turing machine.
@@ -29,11 +31,14 @@ public class TuringMachinePanel extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if(arg instanceof Tape){
+		if(arg instanceof StepResult){
+			System.out.println(((StepResult)arg));
+		}else if(arg instanceof Tape){
 			System.out.println(((Tape)arg).getCurrentState().getIdentifier());
 			this.tape = (Tape) arg;
-		}else if(arg instanceof StepResult){
-			System.out.println(((StepResult)arg));
+		}else if(arg instanceof TuringMachine)
+		{
+			blankSymbol = ((TuringMachine)arg).getBlankSymbol();
 		}
 		repaint();
 	}
@@ -60,7 +65,11 @@ public class TuringMachinePanel extends JPanel implements Observer{
 		for(int i = 0;i<tapeSymbols.size();i++)
 		{
 			Rectangle tapeSection = new Rectangle(padding+tapeFieldWidth*i,(this.getHeight()-TM_READER_HEIGHT)/2,tapeFieldWidth,TM_READER_HEIGHT);
-			g.setColor(Color.white);
+			if(tapeSymbols.get(i).equals(blankSymbol)){
+				g.setColor(Color.LIGHT_GRAY);
+			}else{
+				g.setColor(Color.white);
+			}
 			g.fillRect(tapeSection.x, tapeSection.y, tapeSection.width, tapeSection.height);
 			g.setColor(Color.black);
 			g.drawRect(tapeSection.x, tapeSection.y, tapeSection.width, tapeSection.height);
@@ -70,10 +79,13 @@ public class TuringMachinePanel extends JPanel implements Observer{
 
 	private void drawReadWriteHead(Graphics g) {
 		Rectangle readHead = new Rectangle(this.getWidth()/2-TM_READER_WIDTH/2,0,TM_READER_WIDTH,TM_READER_HEIGHT);
-		g.setColor(new Color(145,230,250));
+		g.setColor(new Color(160,240,255));
 		g.fillRect(readHead.x,readHead.y,readHead.width,readHead.height);
 		g.setColor(Color.black);
 		g.drawRect(readHead.x,readHead.y,readHead.width,readHead.height);
 		g.drawString(tape.getCurrentState().getIdentifier(),readHead.x+readHead.width/4, readHead.y+readHead.height/2);
 	}
+	
+	
+	
 }
