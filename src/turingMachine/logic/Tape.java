@@ -152,7 +152,7 @@ public class Tape {
 	{
 		LinkedList<String> symbols = new LinkedList<String>();
 		symbols.add(getInputAt(position));
-		for(int i = 1;i<symbolCount;i++)
+		for(int i = 1;i<symbolCount+1;i++)
 		{
 			symbols.addFirst(getInputAt(position-i));
 			symbols.addLast(getInputAt(position+i));
