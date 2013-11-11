@@ -1,4 +1,4 @@
-package turingMachine;
+package turingMachine.gui;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -9,12 +9,11 @@ import turingMachine.logic.Tape;
 import turingMachine.logic.Tape.StepResult;
 
 /**
- * Displaying orbs
- * 
+ * Shows all the calculation steps
  * @author Michael
  *
  */
-public class GraphicOutputPanel extends JPanel implements Observer{
+public class CalculationPanel extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {

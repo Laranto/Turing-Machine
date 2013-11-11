@@ -14,9 +14,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
+import turingMachine.gui.CalculationPanel;
+import turingMachine.gui.GraphicOutputPanel;
+import turingMachine.gui.TuringMachinePanel;
 import turingMachine.logic.Tape;
 import turingMachine.logic.TuringMachine;
 import turingMachine.parser.ParseTuringMachineAction;
+
+import javax.swing.JLabel;
+
+import java.awt.Font;
 
 /**
  * @author Arni
@@ -28,6 +35,8 @@ public class TuringAutomata extends Observable{
 	private TuringMachine turingMachine;
 	private JMenuItem setWordMenuItem;
 	private Tape tape;
+	private JLabel lblSteps;
+	private JMenu mnStep;
 
 	public TuringAutomata() {
 		frame = new JFrame("Turing Automata");
@@ -42,12 +51,22 @@ public class TuringAutomata extends Observable{
 		frame.getContentPane().setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 784, 341);
+		tabbedPane.setBounds(0, 0, 784, 313);
 		frame.getContentPane().add(tabbedPane);
 		
 		createTuringMachinePanel(tabbedPane);
 		createGraphicOutputPanel(tabbedPane);
 		createCalculationPanel(tabbedPane);
+		
+		lblSteps = new JLabel("0");
+		lblSteps.setToolTipText("");
+		lblSteps.setBounds(728, 325, 46, 14);
+		frame.getContentPane().add(lblSteps);
+		
+		JLabel lblTotalSteps = new JLabel("Total Steps:");
+		lblTotalSteps.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblTotalSteps.setBounds(627, 324, 91, 14);
+		frame.getContentPane().add(lblTotalSteps);
 	}
 
 	private void createTuringMachinePanel(JTabbedPane tabbedPane) {
@@ -95,7 +114,8 @@ public class TuringAutomata extends Observable{
 		menuBar.add(menu);
 		frame.setJMenuBar(menuBar);
 		
-		JMenu mnStep = new JMenu("Step");
+		mnStep = new JMenu("Step");
+		mnStep.setEnabled(false);
 		menuBar.add(mnStep);
 		
 		JMenuItem mntmForward = new JMenuItem("Run One");
@@ -106,6 +126,7 @@ public class TuringAutomata extends Observable{
 			public void actionPerformed(ActionEvent arg0) {
 				setChanged();
 				notifyObservers(tape.runStep(1));
+				updateAnzahlSchritte();
 			}
 		});
 		mnStep.add(mntmForward);
@@ -116,10 +137,12 @@ public class TuringAutomata extends Observable{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				setChanged();
-				notifyObservers(tape.runStep(Integer.parseInt(JOptionPane.showInputDialog(frame,"Number of Steps:"))));
+				int anzahlSteps = Integer.parseInt(JOptionPane.showInputDialog(frame,"Number of Steps:"));
+				notifyObservers(tape.runStep(anzahlSteps));
+				updateAnzahlSchritte();
 			}
 		});
-		mntmStepXSteps.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.CTRL_MASK));
+		mntmStepXSteps.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
 		mnStep.add(mntmStepXSteps);
 		
 		JMenuItem mntmAllSteps = new JMenuItem("Run All");
@@ -129,16 +152,23 @@ public class TuringAutomata extends Observable{
 			public void actionPerformed(ActionEvent arg0) {
 				setChanged();
 				notifyObservers(tape.runAll());
+				updateAnzahlSchritte();
 			}
 		});
 		mntmAllSteps.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.CTRL_MASK));
 		mnStep.add(mntmAllSteps);
 	}
 	
+	protected void updateAnzahlSchritte() {
+		lblSteps.setText(String.valueOf(tape.getComputationHistory().size()));
+		lblSteps.repaint();
+	}
+
 	public void setTuringMachine(TuringMachine turingMachine){
 		this.turingMachine = turingMachine;
 		setWordMenuItem.getAccessibleContext().setAccessibleDescription("Lets you set a word");
 		setWordMenuItem.setEnabled(true);
+		mnStep.setEnabled(true);
 		setChanged();
 		notifyObservers(turingMachine);
 	}

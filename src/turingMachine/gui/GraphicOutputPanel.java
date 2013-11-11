@@ -1,4 +1,4 @@
-package turingMachine;
+package turingMachine.gui;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -8,11 +8,13 @@ import javax.swing.JPanel;
 import turingMachine.logic.Tape;
 import turingMachine.logic.Tape.StepResult;
 
-public class TuringMachinePanel extends JPanel implements Observer{
-
-	public TuringMachinePanel(){
-		
-	}
+/**
+ * Displaying orbs
+ * 
+ * @author Michael
+ *
+ */
+public class GraphicOutputPanel extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -22,4 +24,5 @@ public class TuringMachinePanel extends JPanel implements Observer{
 			System.out.println(((StepResult)arg));
 		}
 	}
+
 }
