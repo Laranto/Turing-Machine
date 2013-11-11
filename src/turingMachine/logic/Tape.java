@@ -52,6 +52,7 @@ public class Tape {
 		}
 		position = 0;
 		currentState = turingMachine.getStartState();
+		computationHistory = new ArrayList<>();
 	}
 
 	/**
