@@ -1,6 +1,7 @@
 package turingMachine.logic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -163,8 +164,8 @@ public class Tape {
 	/**
 	 * @return a list of all computations that have run so far
 	 */
-	public ArrayList<Computation> getComputationHistory() {
-		return computationHistory;
+	public List<Computation> getComputationHistory() {
+		return Collections.unmodifiableList(computationHistory);
 	}
 
 

@@ -3,6 +3,11 @@ package turingMachine.logic;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A state of a Turing machine.
+ * @author Arni
+ *
+ */
 public class State {
 
 	/**
@@ -26,6 +31,9 @@ public class State {
 		
 	}
 
+	/**
+	 * @return Whether the state is a end state/acceptable state of the Turing machine.
+	 */
 	public boolean isEnd() {
 		return isEnd;
 	}

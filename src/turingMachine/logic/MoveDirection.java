@@ -1,6 +1,7 @@
 package turingMachine.logic;
 
 /**
+ * Direction in which the tape can move during a turing machine computation
  * @author Arni
  *
  */

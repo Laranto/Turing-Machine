@@ -1,5 +1,10 @@
 package turingMachine.logic;
 
+/**
+ * A Computation of a Turing machine. Is created on compiling of a Turing machine.
+ * 
+ * @author Arni
+ */
 public class Computation {
 	private String input;
 	private String output;
@@ -13,6 +18,12 @@ public class Computation {
 	private State targetState;
 	
 	
+	/**
+	 * @param input
+	 * @param output
+	 * @param moveDirection
+	 * @param targetState
+	 */
 	public Computation(String input, String output,
 			MoveDirection moveDirection, State targetState) {
 		super();
