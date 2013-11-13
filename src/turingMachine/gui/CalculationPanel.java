@@ -1,12 +1,15 @@
 package turingMachine.gui;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
+import turingMachine.logic.Computation;
 import turingMachine.logic.Tape;
-import turingMachine.logic.Tape.StepResult;
 
 /**
  * Shows all the calculation steps
@@ -15,13 +18,30 @@ import turingMachine.logic.Tape.StepResult;
  */
 public class CalculationPanel extends JPanel implements Observer{
 
+
+	private JList<Computation> list = new JList<Computation>();
+	private boolean isSuccessState = false;
+
+	public CalculationPanel() {
+		super();
+		setBounds(0, 0, 784, 290);
+		setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 0, 784, 290);
+		add(scrollPane);
+		scrollPane.setViewportView(list);
+	}
+
+	private void updateList(List<Computation> computations) {
+		list.setModel(new CalculationModel(computations));
+		list.repaint();
+	}
+
 	@Override
 	public void update(Observable o, Object arg) {
 		if(arg instanceof Tape){
-			System.out.println(((Tape)arg).getCurrentState().getIdentifier());
-		}else if(arg instanceof StepResult){
-			System.out.println(((StepResult)arg));
+			updateList(((Tape)arg).getComputationHistory());
 		}
 	}
-
 }

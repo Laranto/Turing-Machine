@@ -110,6 +110,7 @@ public class TuringMachine {
 			String[] parts = computationDefinition.replaceAll("[\\(\\)]", "").split("[,=]");
 			states.get(parts[0].trim()).putComputation(
 					new Computation(
+							states.get(parts[0].trim()),
 							parts[1].trim(),
 							parts[3].trim(),
 							MoveDirection.valueOf(parts[4].trim()),

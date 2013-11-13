@@ -31,10 +31,7 @@ public class TuringMachinePanel extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if(arg instanceof StepResult){
-			System.out.println(((StepResult)arg));
-		}else if(arg instanceof Tape){
-			System.out.println(((Tape)arg).getCurrentState().getIdentifier());
+		if(arg instanceof Tape){
 			this.tape = (Tape) arg;
 		}else if(arg instanceof TuringMachine)
 		{

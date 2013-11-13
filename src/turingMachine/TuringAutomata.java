@@ -18,6 +18,7 @@ import turingMachine.gui.CalculationPanel;
 import turingMachine.gui.GraphicOutputPanel;
 import turingMachine.gui.TuringMachinePanel;
 import turingMachine.logic.Tape;
+import turingMachine.logic.Tape.StepResult;
 import turingMachine.logic.TuringMachine;
 import turingMachine.parser.ParseTuringMachineAction;
 
@@ -37,6 +38,7 @@ public class TuringAutomata extends Observable{
 	private Tape tape;
 	private JLabel lblSteps;
 	private JMenu mnStep;
+	private JLabel lblStepResultValue;
 
 	public TuringAutomata() {
 		frame = new JFrame("Turing Automata");
@@ -67,6 +69,14 @@ public class TuringAutomata extends Observable{
 		lblTotalSteps.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblTotalSteps.setBounds(627, 324, 91, 14);
 		frame.getContentPane().add(lblTotalSteps);
+		
+		JLabel lblStepResult = new JLabel("State: ");
+		lblStepResult.setBounds(10, 316, 46, 14);
+		frame.getContentPane().add(lblStepResult);
+		
+		lblStepResultValue = new JLabel("");
+		lblStepResultValue.setBounds(66, 316, 165, 14);
+		frame.getContentPane().add(lblStepResultValue);
 	}
 
 	private void createTuringMachinePanel(JTabbedPane tabbedPane) {
@@ -125,7 +135,8 @@ public class TuringAutomata extends Observable{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				setChanged();
-				notifyObservers(tape.runStep(1));
+				updateStepResult(tape.runStep(1));
+				notifyObservers(tape);
 				updateAnzahlSchritte();
 			}
 		});
@@ -138,7 +149,8 @@ public class TuringAutomata extends Observable{
 			public void actionPerformed(ActionEvent arg0) {
 				setChanged();
 				int anzahlSteps = Integer.parseInt(JOptionPane.showInputDialog(frame,"Number of Steps:"));
-				notifyObservers(tape.runStep(anzahlSteps));
+				updateStepResult(tape.runStep(anzahlSteps));
+				notifyObservers(tape);
 				updateAnzahlSchritte();
 			}
 		});
@@ -151,7 +163,8 @@ public class TuringAutomata extends Observable{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				setChanged();
-				notifyObservers(tape.runAll());
+				updateStepResult(tape.runAll());
+				notifyObservers(tape);
 				updateAnzahlSchritte();
 			}
 		});
@@ -162,6 +175,11 @@ public class TuringAutomata extends Observable{
 	protected void updateAnzahlSchritte() {
 		lblSteps.setText(String.valueOf(tape.getComputationHistory().size()));
 		lblSteps.repaint();
+	}
+	
+	protected void updateStepResult(StepResult stepResult) {
+		lblStepResultValue.setText(String.valueOf(stepResult));
+		lblStepResultValue.repaint();
 	}
 
 	public void setTuringMachine(TuringMachine turingMachine){
@@ -175,6 +193,8 @@ public class TuringAutomata extends Observable{
 	
 	public void setWord(String word){
 		tape = new Tape(turingMachine, word);
+		updateAnzahlSchritte();
+		updateStepResult(StepResult.INITIAL);
 		setChanged();
 		notifyObservers(tape);
 	}
