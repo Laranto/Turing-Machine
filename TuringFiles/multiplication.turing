@@ -1,4 +1,4 @@
-M={Q,S,G,d,firstWord,B,F}
+M_Multiplication={Q,S,G,d,firstWord,B,F}
 Q={firstWord,move2R,secondWord,finalWord,move2SecondWord,move2FirstWord,clearSecondWord,finish}
 S={0,1,Y}
 G={0,1,Y,B}
@@ -11,8 +11,8 @@ d=(secondWord,0) = (move2R,Y,R)
 d=(secondWord,B) = (move2FirstWord,B,L)
 d=(finalWord,B) = (move2SecondWord,0,R)
 d=(finalWord,0) = (finalWord,0,R)
-d=(move2SecondWord,0)=(move2L,0,L)
-d=(move2SecondWord,B)=(move2L,B,L)
+d=(move2SecondWord,0)=(move2SecondWord,0,L)
+d=(move2SecondWord,B)=(move2SecondWord,B,L)
 d=(move2SecondWord,Y)=(secondWord,0,R)
 d=(move2FirstWord,0)=(move2FirstWord,0,L)
 d=(move2FirstWord,1)=(move2FirstWord,1,L)

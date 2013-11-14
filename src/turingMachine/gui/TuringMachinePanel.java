@@ -29,7 +29,7 @@ public class TuringMachinePanel extends JPanel implements Observer{
 	/**
 	 * Size of the reading head of the Turing machine.
 	 */
-	private static int TM_READER_WIDTH=40, TM_READER_HEIGHT=40;
+	private static int TM_READER_WIDTH=100, TM_READER_HEIGHT=40;
 	
 	public TuringMachinePanel(){
 		this.setDoubleBuffered(true);
@@ -104,7 +104,7 @@ public class TuringMachinePanel extends JPanel implements Observer{
 		Rectangle readHead = new Rectangle(this.getWidth()/2-TM_READER_WIDTH/2,0,TM_READER_WIDTH,TM_READER_HEIGHT);
 		g.setColor(progression.getColor());
 		drawRectangle(g, readHead);
-		g.drawString(tape.getCurrentState().getIdentifier(),readHead.x+readHead.width/4, readHead.y+readHead.height/2);
+		g.drawString(tape.getCurrentState().getIdentifier(),readHead.x+5, readHead.y+readHead.height/2);
 	}
 	
 	

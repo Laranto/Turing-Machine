@@ -45,6 +45,7 @@ public class TuringAutomata extends Observable{
 		frame = new JFrame(FRAME_TITLE);
 		frame.setSize(800, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
 		createMenuBar();
 		createTabbedPane();
 		frame.setVisible(true);
