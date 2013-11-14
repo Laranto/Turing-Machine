@@ -32,6 +32,7 @@ import java.awt.Font;
  */
 public class TuringAutomata extends Observable{
 	
+	private static final String FRAME_TITLE = "Turing Automata";
 	private JFrame frame;
 	private TuringMachine turingMachine;
 	private JMenuItem setWordMenuItem;
@@ -41,7 +42,7 @@ public class TuringAutomata extends Observable{
 	private JLabel lblStepResultValue;
 
 	public TuringAutomata() {
-		frame = new JFrame("Turing Automata");
+		frame = new JFrame(FRAME_TITLE);
 		frame.setSize(800, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		createMenuBar();
@@ -179,14 +180,21 @@ public class TuringAutomata extends Observable{
 	
 	protected void updateStepResult(StepResult stepResult) {
 		lblStepResultValue.setText(String.valueOf(stepResult));
+		setChanged();
+		notifyObservers(stepResult);
 		lblStepResultValue.repaint();
 	}
 
 	public void setTuringMachine(TuringMachine turingMachine){
+		if(turingMachine==null)
+		{
+			
+		}
 		this.turingMachine = turingMachine;
 		setWordMenuItem.getAccessibleContext().setAccessibleDescription("Lets you set a word");
 		setWordMenuItem.setEnabled(true);
 		mnStep.setEnabled(true);
+		this.frame.setTitle(FRAME_TITLE + " - " + turingMachine.getMachineName());
 		setChanged();
 		notifyObservers(turingMachine);
 	}

@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import turingMachine.TuringAutomata;
+import turingMachine.logic.TuringMachine;
 
 public class ParseTuringMachineAction implements ActionListener {
 
@@ -26,9 +27,14 @@ public class ParseTuringMachineAction implements ActionListener {
 		if(fileChooser.showOpenDialog(fileChooser) == JFileChooser.APPROVE_OPTION)
 		{
 				try {
-					turingAutomata.setTuringMachine(Parser.parseTuringMachineFile(fileChooser.getSelectedFile()));
+					TuringMachine tm = Parser.parseTuringMachineFile(fileChooser.getSelectedFile());
+					turingAutomata.setTuringMachine(tm);
 				} catch (IOException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				} catch(Exception e)
+				{
+					JOptionPane.showMessageDialog(null, "Parsing error!" + e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
 					e.printStackTrace();
 				}
 		}

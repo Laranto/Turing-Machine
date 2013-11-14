@@ -1,5 +1,6 @@
 package turingMachine.logic;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -172,6 +173,14 @@ public class Tape {
 
 
 	public enum StepResult {
-		INITIAL, INPROGRESS, FAILURE, SUCCESS;
+		INITIAL(new Color(255,255,51)), INPROGRESS(new Color(160,240,255)), FAILURE(new Color(230,32,32)), SUCCESS(new Color(150,250,150));
+		private Color color;
+		private StepResult(Color color) {
+			this.color = color;
+		}
+		public Color getColor() {
+			return color;
+		}
+		
 	}
 }

@@ -85,11 +85,15 @@ public class TuringMachinePanel extends JPanel implements Observer{
 			}else{
 				g.setColor(Color.white);
 			}
-			g.fillRect(tapeSection.x, tapeSection.y, tapeSection.width, tapeSection.height);
-			g.setColor(Color.black);
-			g.drawRect(tapeSection.x, tapeSection.y, tapeSection.width, tapeSection.height);
+			drawRectangle(g, tapeSection);
 			g.drawString(tapeSymbols.get(i), tapeSection.x+tapeSection.width/2, tapeSection.y+tapeSection.height/2);
 		}
+	}
+
+	private void drawRectangle(Graphics g, Rectangle rectangle) {
+		g.fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+		g.setColor(Color.black);
+		g.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
 	}
 
 	/**
@@ -98,18 +102,8 @@ public class TuringMachinePanel extends JPanel implements Observer{
 	 */
 	private void drawReadWriteHead(Graphics g) {
 		Rectangle readHead = new Rectangle(this.getWidth()/2-TM_READER_WIDTH/2,0,TM_READER_WIDTH,TM_READER_HEIGHT);
-		if(progression==StepResult.SUCCESS)
-		{
-			g.setColor(new Color(150,250,150));
-		}else if(progression==StepResult.FAILURE)
-		{
-			g.setColor(new Color(230,32,32));
-		}else{
-			g.setColor(new Color(160,240,255));
-		}
-		g.fillRect(readHead.x,readHead.y,readHead.width,readHead.height);
-		g.setColor(Color.black);
-		g.drawRect(readHead.x,readHead.y,readHead.width,readHead.height);
+		g.setColor(progression.getColor());
+		drawRectangle(g, readHead);
 		g.drawString(tape.getCurrentState().getIdentifier(),readHead.x+readHead.width/4, readHead.y+readHead.height/2);
 	}
 	
