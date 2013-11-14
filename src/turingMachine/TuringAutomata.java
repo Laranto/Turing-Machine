@@ -149,10 +149,8 @@ public class TuringAutomata extends Observable{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				setChanged();
 				int anzahlSteps = Integer.parseInt(JOptionPane.showInputDialog(frame,"Number of Steps:"));
 				updateStepResult(tape.runStep(anzahlSteps));
-				notifyObservers(tape);
 				updateAnzahlSchritte();
 			}
 		});
@@ -164,9 +162,7 @@ public class TuringAutomata extends Observable{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				setChanged();
 				updateStepResult(tape.runAll());
-				notifyObservers(tape);
 				updateAnzahlSchritte();
 			}
 		});
@@ -181,16 +177,14 @@ public class TuringAutomata extends Observable{
 	
 	protected void updateStepResult(StepResult stepResult) {
 		lblStepResultValue.setText(String.valueOf(stepResult));
+		lblStepResultValue.repaint();
 		setChanged();
 		notifyObservers(stepResult);
-		lblStepResultValue.repaint();
+		setChanged();
+		notifyObservers(tape);
 	}
 
 	public void setTuringMachine(TuringMachine turingMachine){
-		if(turingMachine==null)
-		{
-			
-		}
 		this.turingMachine = turingMachine;
 		setWordMenuItem.getAccessibleContext().setAccessibleDescription("Lets you set a word");
 		setWordMenuItem.setEnabled(true);
