@@ -24,6 +24,7 @@ public class TuringMachinePanel extends JPanel implements Observer{
 
 	private Tape tape; 
 	private String blankSymbol;
+	private StepResult progression;
 	
 	/**
 	 * Size of the reading head of the Turing machine.
@@ -41,6 +42,9 @@ public class TuringMachinePanel extends JPanel implements Observer{
 		}else if(arg instanceof TuringMachine)
 		{
 			blankSymbol = ((TuringMachine)arg).getBlankSymbol();
+		}if(arg instanceof StepResult)
+		{
+			progression=(StepResult) arg;
 		}
 		repaint();
 	}
@@ -94,7 +98,15 @@ public class TuringMachinePanel extends JPanel implements Observer{
 	 */
 	private void drawReadWriteHead(Graphics g) {
 		Rectangle readHead = new Rectangle(this.getWidth()/2-TM_READER_WIDTH/2,0,TM_READER_WIDTH,TM_READER_HEIGHT);
-		g.setColor(new Color(160,240,255));
+		if(progression==StepResult.SUCCESS)
+		{
+			g.setColor(new Color(150,250,150));
+		}else if(progression==StepResult.FAILURE)
+		{
+			g.setColor(new Color(230,32,32));
+		}else{
+			g.setColor(new Color(160,240,255));
+		}
 		g.fillRect(readHead.x,readHead.y,readHead.width,readHead.height);
 		g.setColor(Color.black);
 		g.drawRect(readHead.x,readHead.y,readHead.width,readHead.height);
