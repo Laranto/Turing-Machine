@@ -172,6 +172,6 @@ public class Tape {
 
 
 	public enum StepResult {
-		INPROGRESS, FAILURE, SUCCESS
+		INITIAL, INPROGRESS, FAILURE, SUCCESS;
 	}
 }
