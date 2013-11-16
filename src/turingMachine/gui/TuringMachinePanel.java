@@ -20,6 +20,8 @@ import turingMachine.logic.TuringMachine;
  */
 public class TuringMachinePanel extends JPanel implements Observer{
 
+	private static final long serialVersionUID = 1L;
+
 	private static final int CHARACTERS_AROUND_HEAD_ON_TAPE = 15;
 
 	private Tape tape; 

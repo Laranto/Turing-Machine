@@ -19,9 +19,8 @@ import turingMachine.logic.Tape;
  */
 public class CalculationPanel extends JPanel implements Observer{
 
-
+	private static final long serialVersionUID = 1L;
 	private JList<Computation> list = new JList<Computation>();
-	private boolean isSuccessState = false;
 
 	public CalculationPanel() {
 		super();
@@ -34,6 +33,7 @@ public class CalculationPanel extends JPanel implements Observer{
 		scrollPane.setViewportView(list);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void updateList(List<Computation> computations) {
 		list.setModel(new CalculationModel(computations));
 		list.repaint();

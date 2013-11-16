@@ -57,4 +57,8 @@ public class Computation {
 				+ ", ) = (" + targetState.getIdentifier() + ", " + output
 				+ ", " + moveDirection + ")";
 	}
+	
+	public String toTranslationCode(){
+		return input + "/"+output+","+moveDirection;
+	}
 }

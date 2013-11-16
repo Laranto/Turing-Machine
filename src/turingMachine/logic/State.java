@@ -1,6 +1,9 @@
 package turingMachine.logic;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,6 +58,30 @@ public class State {
 	public String getIdentifier() {
 		return identifier;
 	}
+
+	public List<State> getFollowingStates() {
+		List<State> followingStates = new ArrayList<>();
+		for (Computation comp : computations.values()) {
+			followingStates.add(comp.getTargetState());
+		}
+		return followingStates;
+	}
 	
+	/**
+	 * Gets the computation that leads to the target state.
+	 * @param target
+	 * @return computation or null if no computation to  the target state is available.
+	 */
+	public Computation getComputation(State target)
+	{
+		for (Computation comp : computations.values()) {
+			if(comp.getTargetState().equals(target))
+			{
+				return comp;
+			}
+		}
+		
+		return null;
+	}
 	
 }
