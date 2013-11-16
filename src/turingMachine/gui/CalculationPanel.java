@@ -8,6 +8,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import turingMachine.gui.utility.CalculationModel;
 import turingMachine.logic.Computation;
 import turingMachine.logic.Tape;
 

@@ -5,8 +5,6 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
-import turingMachine.logic.Tape;
-
 /**
  * Displaying orbs
  * 

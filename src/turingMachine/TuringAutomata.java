@@ -90,7 +90,7 @@ public class TuringAutomata extends Observable{
 	private void createGraphicOutputPanel(JTabbedPane tabbedPane) {
 		GraphicOutputPanel graphicOutputPanel = new GraphicOutputPanel();
 		addObserver(graphicOutputPanel);
-		tabbedPane.addTab("Glaphical Output", null, graphicOutputPanel, null);
+		tabbedPane.addTab("Graphical Output", null, graphicOutputPanel, null);
 	}
 	
 	private void createCalculationPanel(JTabbedPane tabbedPane) {
