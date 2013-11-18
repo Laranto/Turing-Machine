@@ -37,6 +37,7 @@ public class TuringAutomata extends Observable{
 	private JFrame frame;
 	private TuringMachine turingMachine;
 	private JMenuItem setWordMenuItem;
+	private JMenuItem countTapeMenuItem;
 	private Tape tape;
 	private JLabel lblSteps;
 	private JMenu mnStep;
@@ -123,7 +124,17 @@ public class TuringAutomata extends Observable{
 			}
 		});
 		
+		countTapeMenuItem = new JMenuItem("Get Tape Length");
+		countTapeMenuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, tape.getTapeContentCount(), "Number of symbols on the tape",JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		
 		menu.add(setWordMenuItem);
+		menu.add(countTapeMenuItem);
 		menuBar.add(menu);
 		frame.setJMenuBar(menuBar);
 		

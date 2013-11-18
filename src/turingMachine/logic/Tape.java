@@ -161,6 +161,19 @@ public class Tape {
 		return symbols;
 	}
 	
+	/**
+	 * @return
+	 */
+	public int getTapeContentCount()
+	{
+		int symbolcount = 0;
+		for (String symbol : word.values()) {
+			if(!symbol.equals(turingMachine.getBlankSymbol())){
+				symbolcount++;
+			}
+		}
+		return symbolcount;
+	}
 	
 
 	/**
